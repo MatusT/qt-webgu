@@ -1,8 +1,13 @@
 #pragma once
 
+#ifndef WEBGPUWINDOW
+#define WEBGPUWINDOW
+
 #include <QWindow>
 
-#include <webgpu.h>
+#include <memory>
+
+#include <webgpu/webgpu.hpp>
 
 class WebGPUWindow : public QWindow {
   Q_OBJECT
@@ -20,14 +25,16 @@ protected:
   void exposeEvent(QExposeEvent *) override;
 
 private:
-  WGPUInstance instance = nullptr;
-  WGPUAdapter adapter = nullptr;
-  WGPUSurface surface = nullptr;
-  WGPUDevice device = nullptr;
-  WGPUQueue queue = nullptr;
+  std::unique_ptr<wgpu::Instance> instance;
+  std::unique_ptr<wgpu::Adapter> adapter;
+  std::unique_ptr<wgpu::Surface> surface;
+  std::unique_ptr<wgpu::Device> device;
+  std::unique_ptr<wgpu::Queue> queue;
 
   void init();
   void draw();
 
   bool initialized = false;
 };
+
+#endif
