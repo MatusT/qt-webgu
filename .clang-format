@@ -1,1 +1,5 @@
+Language: Cpp
+BasedOnStyle: LLVM
+MacroBlockBegin: '#pragma region'
+MacroBlockEnd: '#pragma regionend'
 ColumnLimit: 200

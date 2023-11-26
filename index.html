@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+    <canvas>
+        
+    </canvas>
+
+    <script type="module">
+        import Renderer from './build-wasm/renderer.js';
+
+        const rendererModule = await Renderer();
+
+        console.log(rendererModule);
+        console.log(new rendererModule.Renderer())
+
+    </script>
+</body>
+</html>

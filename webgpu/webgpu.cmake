@@ -10,7 +10,7 @@ if (NOT TARGET webgpu)
 		FetchContent_Declare(
 			webgpu-backend-emscripten
 			GIT_REPOSITORY https://github.com/eliemichel/WebGPU-distribution
-			GIT_TAG        emscripten-v3.1.45
+			GIT_TAG        13d25890ce605371b77cbf14d9643a7ed5e6d5fb
 			GIT_SHALLOW    TRUE
 		)
 		FetchContent_MakeAvailable(webgpu-backend-emscripten)

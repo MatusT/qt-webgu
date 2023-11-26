@@ -6,21 +6,42 @@ include(utils.cmake)
 
 add_subdirectory(webgpu)
 
-find_package(Qt6 6.6 REQUIRED COMPONENTS Core Widgets)
+if (EMSCRIPTEN)
+    add_executable(renderer Renderer.hpp Renderer.cpp)
 
-add_library(wgpu-native SHARED IMPORTED)
+    set_target_properties(renderer PROPERTIES
+        CXX_STANDARD 20
+    )
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+    target_link_libraries(renderer PRIVATE webgpu)
 
-add_executable(main main.cpp WebGPUWindow.cpp)
+    # set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "-s ENVIRONMENT=web -s SINGLE_FILE=1 -s MODULARIZE -s 'EXPORT_NAME=DummyCppLibrary' --bind")
+    set_target_properties(renderer PROPERTIES LINK_FLAGS "-s ENVIRONMENT=web -s \"EXPORT_NAME=Renderer\" -s EXPORT_ES6=1 -s MODULARIZE")
+    # Add Emscripten-specific link options
+    target_link_options(renderer PRIVATE
+        -sALLOW_MEMORY_GROWTH
+        -sUSE_WEBGPU # Handle WebGPU symbols
+        -sASYNCIFY # Required by WebGPU-C++
+        -lembind
+    )
 
-target_link_libraries(main PRIVATE Qt6::Core Qt6::Widgets webgpu)
+    # target_treat_all_warnings_as_errors(renderer)
+    target_copy_webgpu_binaries(renderer)
+else()
+    find_package(Qt6 6.6 REQUIRED COMPONENTS Core Widgets)
 
-set_target_properties(main PROPERTIES
-    CXX_STANDARD 20
-    COMPILE_WARNING_AS_ERROR ON
-)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTORCC ON)
 
-target_treat_all_warnings_as_errors(main)
-target_copy_webgpu_binaries(main)
+    add_executable(main main.cpp implementations.cpp WebGPUWindow.hpp WebGPUWindow.cpp Renderer.hpp Renderer.cpp)
+
+    target_link_libraries(main PRIVATE Qt6::Core Qt6::Widgets webgpu)
+
+    set_target_properties(main PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_WARNING_AS_ERROR ON
+    )
+
+    target_treat_all_warnings_as_errors(main)
+    target_copy_webgpu_binaries(main)             
+endif() 
