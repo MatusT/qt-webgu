@@ -16,7 +16,7 @@ if (EMSCRIPTEN)
     target_link_libraries(renderer PRIVATE webgpu)
 
     # set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "-s ENVIRONMENT=web -s SINGLE_FILE=1 -s MODULARIZE -s 'EXPORT_NAME=DummyCppLibrary' --bind")
-    set_target_properties(renderer PROPERTIES LINK_FLAGS "-s ENVIRONMENT=web -s \"EXPORT_NAME=Renderer\" -s EXPORT_ES6=1 -s MODULARIZE")
+    set_target_properties(renderer PROPERTIES LINK_FLAGS "-s ENVIRONMENT=web -s \"EXPORT_NAME=Renderer\" -s EXPORT_ES6=1 -s MODULARIZE -s EXPORTED_RUNTIME_METHODS=[WebGPU]")
     # Add Emscripten-specific link options
     target_link_options(renderer PRIVATE
         -sALLOW_MEMORY_GROWTH

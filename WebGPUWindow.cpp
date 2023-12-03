@@ -18,6 +18,14 @@ WebGPUWindow::WebGPUWindow(QWindow *parent) : QWindow(parent) {
 
 WebGPUWindow::~WebGPUWindow() {}
 
+void WebGPUWindow::setBackgroundColor(double ri, double gi, double bi) {
+  this->r = ri;
+  this->g = gi;
+  this->b = bi;
+
+  this->renderer->setBackgroundColor(this->r, this->g, this->b);
+}
+
 void WebGPUWindow::init() {
   this->instance = std::make_unique<wgpu::Instance>(wgpu::createInstance({}));
 

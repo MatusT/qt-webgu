@@ -74,6 +74,9 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "qplatformsurfaceevent": "cpp",
-        "cassert": "cpp"
+        "cassert": "cpp",
+        "qhboxlayout": "cpp",
+        "qwidget": "cpp",
+        "qgridlayout": "cpp"
     }
 }

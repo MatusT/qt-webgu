@@ -1,20 +1,97 @@
 <!DOCTYPE html>
-<head>
 
+<head>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body,
+        canvas {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #controls {
+            position: fixed;
+            left: 40px;
+            top: 40px;
+            background: lightgrey;
+            width: 320px;
+            height: 180px;
+            z-index: 2;
+        }
+    </style>
 </head>
+
 <body>
-    <canvas>
-        
+    <div id="controls">
+        <label for="red">Red</label>
+        <input type="range" min="0" max="255" value="0" id="red" title="Red">
+    </div>
+    <canvas id="mainCanvas">
+
     </canvas>
 
     <script type="module">
         import Renderer from './build-wasm/renderer.js';
 
+        let r = 0;
+
         const rendererModule = await Renderer();
 
-        console.log(rendererModule);
-        console.log(new rendererModule.Renderer())
+        const renderer = new rendererModule.Renderer();
+
+        const adapter = await navigator.gpu.requestAdapter();
+        const device = await adapter.requestDevice();
+        const queue = device.queue;
+
+        const adapterId = rendererModule.WebGPU.mgrAdapter.create(adapter);
+        const deviceId = rendererModule.WebGPU.mgrDevice.create(device);
+        const queueId = rendererModule.WebGPU.mgrQueue.create(queue);
+
+        const canvas = document.getElementById('mainCanvas');
+
+        if (!canvas) {
+            console.log("Could not find canvas");
+        } else {
+            const context = canvas.getContext('webgpu');
+
+            const devicePixelRatio = window.devicePixelRatio;
+            canvas.width = canvas.clientWidth * devicePixelRatio;
+            canvas.height = canvas.clientHeight * devicePixelRatio;
+            const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+
+            context.configure({
+                device,
+                format: presentationFormat,
+                alphaMode: 'premultiplied',
+            });
+
+            let redSlider = document.getElementById('red');
+            redSlider.onchange = function() {
+                renderer.setBackgroundColor(redSlider.value / 255.0, 0.25, 0.8);
+            }
+
+            function frame() {
+                const textureView = context.getCurrentTexture().createView();
+
+                const textureViewId = rendererModule.WebGPU.mgrTextureView.create(textureView);
+
+                renderer.drawEmscripten(deviceId, queueId, textureViewId);
+
+                requestAnimationFrame(frame);
+            }
+
+            requestAnimationFrame(frame);
+        }
+
 
     </script>
 </body>
+
 </html>
