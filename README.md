@@ -25,6 +25,7 @@ Open Qt Creator and build it!. The only dependency is Qt.
 
 ## Web version
 
+[ There is already a prebuilt version in build-wasm. ]
 You need  to install emscripten sdk and then run the build using enmake cmake
 
 ```
