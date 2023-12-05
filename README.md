@@ -1,5 +1,7 @@
 # qt-webgu
 
+![Showcase](/screenshots/main.png)
+
 Example of creating project that shares code between Qt QWidgets and Web.
 In this example, there is Renderer class responsible for rendering 3D scene.
 Emscripten compiles this class down to WebAssembly. In order to pass WebGPU's
