@@ -13,7 +13,8 @@ project thanks to createWindowContainer function of Qt 5.1+.
 Tested on Windows 11, DX12.
 
 # Dependencies
-- Qt
+- C++20 compiler (Visual Studio 2019+)
+- Qt 6 + (5 is enough but this was tested with 6) with cmake and ninja installed
 - Emscripten
 
 # Building
@@ -37,9 +38,11 @@ cmake --build .
 
 ## Qt Version
 
+Hit run
+
 ## Web version
 
-Open any live server (like the one VS Code has)
+Open index.html in any live server (like the one VS Code has)
 
 # TODO
 - Figure out why only DX12 works in Qt
