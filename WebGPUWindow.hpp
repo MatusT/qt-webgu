@@ -21,8 +21,8 @@ public:
   void setBackgroundColor(double ri, double gi, double bi);
 
   double r = 0.0;
-  double g = 0.0;
-  double b = 0.0;
+  double g = 0.25;
+  double b = 0.8;
 
 protected:
   void paintEvent(QPaintEvent* event) override;

@@ -8,7 +8,7 @@
 using namespace emscripten;
 #endif
 
-Renderer::Renderer() : backgroundColor({0.0, 0.2, 0.6}) {}
+Renderer::Renderer() : backgroundColor({0.0, 0.25, 0.8}) {}
 Renderer::~Renderer() {}
 
 #ifdef __EMSCRIPTEN__

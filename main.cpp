@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
   QApplication application(argc, argv);
 
   QMainWindow window;
-  window.setMinimumWidth(1280);
+  window.setMinimumWidth(720);
   window.setMinimumHeight(720);
   QWidget *w = new QWidget(&window);
 
