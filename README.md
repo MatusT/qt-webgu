@@ -5,7 +5,7 @@
 Example of creating project that shares code between Qt QWidgets and Web.
 In this example, there is Renderer class responsible for rendering 3D scene.
 Emscripten compiles this class down to WebAssembly. In order to pass WebGPU's
-Device, Queue, etc... objects they are turned into a 32-bit pointer using
+Device, Queue, etc... objects into C++/WASM they are turned into a 32-bit pointer using
 shim layer provided by emscripten.
 
 Qt side embeds renderer inside QWindow that retrieves its native window handle
