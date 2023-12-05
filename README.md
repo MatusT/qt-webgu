@@ -9,7 +9,7 @@ Device, Queue, etc... objects they are turned into a 32-bit pointer using
 shim layer provided by emscripten.
 
 Qt side embeds renderer inside QWindow that retrieves its native window handle
-in order to create native surface. This QWindow is then integrade into QWidgets
+in order to create native surface. This QWindow is then integrated into QWidgets
 project thanks to createWindowContainer function of Qt 5.1+.
 
 Tested on Windows 11, DX12.
